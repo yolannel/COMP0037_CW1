@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+#%%
 '''
 Created on 24 Jan 2022
 
@@ -48,3 +48,4 @@ if __name__ == '__main__':
     plt.ylabel('Mean Charging Rate (Amps)')
     plt.title('Violin Plot of Robot Charging Data')
     plt.grid(True)
+# %%
