@@ -1,0 +1,5 @@
+This problem can be formulated as a multi-armed bandit problem with the robot being the bandit, the four charging locations being the arms, and the charging rate being the reward which is cumulative over time. The robot has to learn which charging location provides the best reward, in this case being the fastest charging rate, without any prior information or training. Each charging location has a reward drawn from a stationary probability distribution defined by Table 1 which is unknown to the robot.
+
+The epistemic uncertainty can be described as whether the robot's model of the four charging stations is correct or not. This would encourage more exploration to determine an accurate model of the rewards per each station. This uncertainty decreases with additional trials (more data).
+
+The aleatoric uncertainty would then be probability that a charging station has a charging rate. Specifically, the aleatoric uncertainty can best be described by the variance, in this case all of which equal 1, of the Gaussian distributions of the charging rates.
