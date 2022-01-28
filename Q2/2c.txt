@@ -1,0 +1,8 @@
+The first change Dijkstra's algorithm implements is the use a priority queue instead of a FIFO queue
+with the key for the queue being the distance from the initial state to the cell. The lower the distance
+from the initial state the higher the priority in the queue. The second change is the use of a cost function
+to calculate optimality. The path between cells can be assigned a cost function which is used to determine
+the shortest path to a particular cell. Each cell is assigned a path_cost variable which is uesd to store
+the cost of the most optimal path. Using this approach, Dijkstra's is able to find the most optimal path to
+a specific cell from the initial state while taking into account distance and traversibility through the
+cost function.
