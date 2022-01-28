@@ -5,6 +5,6 @@ The epistemic uncertainty can be described as whether the robot's model of the f
 The aleatoric uncertainty would then be probability that a charging station has a charging rate. Specifically, the aleatoric uncertainty can best be described by the variance, in this case all of which equal 1, of the Gaussian distributions of the charging rates.
 
 *** Can add some stuff below to your answer for more detail ***
-The epistemic uncertainty is the uncertainty in the model, developed from the lack of ‘knowledge’ we have on the problem, and is defined by the mean values or from the problem point of view, the mean charging rates. The more we find out about the epistemic uncertainty, the more we can reduce the it which could allow the robot to separate distributions of charging rates more easily.
+The epistemic uncertainty is the uncertainty in the model, developed from the lack of ‘knowledge’ we have on the problem, and is defined by the mean values or from the problem point of view, the mean charging rates. The more we find out about the epistemic uncertainty, the more we can reduce the it which could allow the robot to separate distributions of charging rates for each charging location more easily.
 
 The aleatoric uncertainty is the uncertainty in the measurement or the randomness of the model, defined by the variance σ2. In this problem, the aleatoric uncertainty is the variation in charging rates for each location, as each location will have a distribution of charging rates around its mean.
