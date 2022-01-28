@@ -1,0 +1,16 @@
+Breadth first search uses a first-in-first-out queue to process new cells. When the agent
+visits a new cell it adds the surrounding cells to a queue. The first cell added is then
+processed by the agent and the process repeats. This algorithm results in the robot visiting
+all surrounding cells in a methodical but slow way. 
+
+Depth first uses a last-in-first-out queue to process new cells. When a agent running a depth-first
+visits a new cell it adds the surrounding cells to the queue in a similar way to breadth-first.
+However, instead of processing the cell first added into the queue, the agent takes the last cell added
+into the queue and visits that cell.
+
+The breadth first search visits all the surrounding cells in a slow but methodical manner. Compared to
+depth-first, breadth-first will visit more cells before being able to find the goal. However, the path
+to the goal will always be optimal. (Optimal path is defined as the solution with the minimum number of
+edges between start and goal assuming same cost for all edges, need to optimise cost function for shortest
+distance path). Depth first is able to find the goal without vising as many cells, however, the path found
+to the goal will not be optimal.
