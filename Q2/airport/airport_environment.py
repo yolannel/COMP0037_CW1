@@ -9,10 +9,10 @@ from enum import Enum
 import gym
 
 # Import the planners
-from grid_search.a_star_planner import AStarPlanner
+# from grid_search.a_star_planner import AStarPlanner
 from grid_search.breadth_first_planner import BreadthFirstPlanner
 from grid_search.depth_first_planner import DepthFirstPlanner
-from grid_search.dijkstra_planner import DijkstraPlanner
+# from grid_search.dijkstra_planner import DijkstraPlanner
 
 from bandits.bandit import Bandit
 from .actions import ActionType
@@ -41,8 +41,8 @@ class AirportBatteryChargingEnvironment(gym.Env):
         planner_factory = {
             PlannerType.BREADTH_FIRST : BreadthFirstPlanner(self._airport_map),
             PlannerType.DEPTH_FIRST : DepthFirstPlanner(self._airport_map),
-            PlannerType.DIJKSTRA : DijkstraPlanner(self._airport_map),
-            PlannerType.A_STAR : AStarPlanner(self._airport_map),
+            # PlannerType.DIJKSTRA : DijkstraPlanner(self._airport_map),
+            # PlannerType.A_STAR : AStarPlanner(self._airport_map),
             }
         self._planner = planner_factory.get(planner_type)
 
