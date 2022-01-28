@@ -14,8 +14,6 @@ class AStarPlanner(DijkstraPlanner):
     
     def __init__(self, occupancyGrid):
         DijkstraPlanner.__init__(self, occupancyGrid)
-        self.heuristic = CostToComeHeuristic.EUCLIDEAN
-        self.alpha = 1
 
     # Q2h:
     # Complete implementation of A*.
