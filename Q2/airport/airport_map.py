@@ -167,7 +167,7 @@ class AirportMap(CellGrid):
     # Q2e:
     # Modify this code to incorporate the cell-type multiplicative penalty
     
-    def compute_l_stage_additive_cost(self, last_coords, current_coords):
+    def compute_transition_cost(self, last_coords, current_coords):
         
         # Compute the basic Euclidean cost
         dX = current_coords[0] - last_coords[0]

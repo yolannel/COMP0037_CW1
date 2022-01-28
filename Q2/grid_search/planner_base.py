@@ -92,7 +92,7 @@ class PlannerBase(object):
         cell_coords = cell.coords()
         parent_cell_coords = parentCell.coords()
         
-        return self._environment_map.compute_l_stage_additive_cost(parent_cell_coords, cell_coords)
+        return self._environment_map.compute_transition_cost(parent_cell_coords, cell_coords)
 
     # This method gets the list of cells which potentially could be
     # visited next. Each candidate position has to be tested
@@ -284,7 +284,7 @@ class PlannerBase(object):
         for cell in path.waypoints:
             if cell.parent is not None:
                 path_cost = path_cost + \
-                    self._environment_map.compute_l_stage_additive_cost(cell.parent.coords(), cell.coords())                
+                    self._environment_map.compute_transition_cost(cell.parent.coords(), cell.coords())
 
         path.path_travel_cost = path_cost
 

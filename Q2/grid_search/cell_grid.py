@@ -17,7 +17,7 @@ class CellGrid(Grid):
     def __init__(self, name, width, height):
         Grid.__init__(self, name, width, height)
     
-    def compute_l_stage_additive_cost(self, last_coords, current_coords):
+    def compute_transition_cost(self, last_coords, current_coords):
         raise NotImplementedError()        
 
     # Get the status of a cell.
