@@ -1,0 +1,8 @@
+Upper-Confidence-Bound action selection is an extended version of the ε - greedy strategy. The main disadvantage of ε – greedy and other action selection algorithms is that they do not take into account uncertainty. Through all time steps, the probability that a random action or an optimal action is chosen is constant, and so the probability of exploration is constant throughout. This means that over longer timesteps, the exploitation of the optimal action may not be chosen as often as it should be. Therefore the upper confidence bound is proposed as a method which reduces the exploration over time as the uncertainty in optimal action step is reduced through learned knowledge of the system.
+It does this by instead of randomly selecting an action to perform at timestep t, it chooses the action with the highest confidence 
+The equation used to implement the upper bound confidence value is:
+C_t (a)=c√(logt/(N_t (a) ))
+Where c is the confidence value determining how much exploration you want to do, Nt is the number of times the action ‘a’ has been selected prior to time ‘t’
+So the overall equation is given by the highest value given by the sum of Qt(a) and Ct(a):
+A_t=argmax〖[Q〗_t (a)+C_t (a)]
+Where Q¬t¬(a) is the estimated value of action ‘a’ at timestep t and is the exploitation. Ct(a) is the upper bound confidence value and is the exploration.
