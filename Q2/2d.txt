@@ -1,0 +1,11 @@
+Dijkstra's algorithm uses a priority queue system to handle cells where the key is the path distance from the start point.
+The closer a cell is to the start point, the higher the priority. The path cost of the start cell is set to 0 and the path cost of 
+each cell is set using the path cost of the parent cell plus the distance to the new cell. Once all the ajoining cells have been
+added into the queue the algorithm processes the highest priority cell in the queue and adds the ajoining cells into the queue.
+If there is more than one path to a cell, the algorithm considers it a duplicate and handles it by comparing the two possible path
+costs using the path cost stored in the two potential parent cells. The algorithm then chooses the parent cell that has the lower
+path cost and rewrites the cell's parent if necessary. This process is repeated until the algorithm reaches the goal. Using this
+approach Dijkstra's guarantees that the path found between the start and the goal is optimal.
+
+Compared to breadth-first search, Dijkstra visits a similar number of cells but usually has an identical or slightly lower path cost.
+(Total cost calculations to be done)
