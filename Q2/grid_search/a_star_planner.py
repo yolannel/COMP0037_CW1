@@ -17,3 +17,23 @@ class AStarPlanner(DijkstraPlanner):
 
     # Q2h:
     # Complete implementation of A*.
+    def push_cell_onto_queue(self, cell):
+        cellCoords = cell.coords()
+        goalCoords = self.goal.coords()
+        
+        # Estimate Cost to Come
+        dXp = cellCoords[0] - goalCoords[0]
+        dYp = cellCoords[1] - goalCoords[1]
+        estCost = math.sqrt(dXp * dXp + dYp * dYp)
+
+        if (cell.parent is None):
+            cell.path_cost = 0
+        else:
+            # Calculate current path cost using parent
+            parentCoords = cell.parent.coords()
+            dXp = cellCoords[0] - parentCoords[0]
+            dYp = cellCoords[1] - parentCoords[1]
+            dp = math.sqrt(dXp * dXp + dYp * dYp)
+            cell.path_cost = cell.parent.path_cost + dp
+
+        self.priorityQueue.put((cell.path_cost + estCost, cell))

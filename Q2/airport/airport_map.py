@@ -1,8 +1,8 @@
-'''
+"""
 Created on 25 Jan 2022
 
 @author: ucacsjj
-'''
+"""
 
 # This class stores a cleaning scenario. The scenario is used by the
 # environment and the path planner
@@ -16,6 +16,7 @@ from grid_search.cell_grid import CellGrid
 
 from grid_search.search_grid import SearchGridCell
 
+
 # The type of the cell
 class MapCellType(Enum):
     UNKNOWN = -1
@@ -28,12 +29,12 @@ class MapCellType(Enum):
     CHARGING_STATION = 6
     RUBBISH_BIN = 7
     CHAIR = 8
-    
+
+
 # Class for the map cell. We'll use Python's sloppy syntax to support meta data
 class MapCell(Cell):
 
-    def __init__(self, coords, map_cell_type = MapCellType.OPEN_SPACE, params = None):
-        
+    def __init__(self, coords, map_cell_type=MapCellType.OPEN_SPACE, params=None):
         Cell.__init__(self, coords)
 
         # The map cell type
@@ -47,13 +48,13 @@ class MapCell(Cell):
     # Get the cell label
     def cell_type(self):
         return self._cell_type
-    
+
     def set_cell_type(self, map_cell_type):
         self._cell_type = map_cell_type
-    
+
     def set_params(self, params):
         self._params = params
-    
+
     def params(self):
         return self._params
 
@@ -64,23 +65,23 @@ class MapCell(Cell):
 # The idea is that you set properties of cells, but add objects
 
 class AirportMap(CellGrid):
-    '''
+    """
     classdocs
-    '''
+    """
 
     def __init__(self, name, width, height):
         CellGrid.__init__(self, name, width, height)
 
         self._map = [[MapCell((x, y)) for y in range(self._height)] \
                      for x in range(self._width)]
-                
+
         # set lists used to simplify stuff
         self._charging_stations = []
-        
+
         self._rubbish_bins = []
-        
+
         self._toilets = []
-        
+
         # This is used to specify if a cell type obstructs the robot or not
         # Note that, to plan a path to a cell, we have to make that
         # cell not an obstruction
@@ -94,44 +95,44 @@ class AirportMap(CellGrid):
             MapCellType.TOILET: True,
             MapCellType.CHARGING_STATION: False,
             MapCellType.RUBBISH_BIN: False,
-            MapCellType.CHAIR: True,    
+            MapCellType.CHAIR: True,
         }
-    
+
     def resolution(self):
         return 1
 
     # Get the cell object stored at a particular set of coordinates
     def cell(self, x, y):
         return self._map[x][y]
-    
+
     def is_obstructed(self, x, y):
         cell_type = self._map[x][y].cell_type()
         return self._is_obstruction.get(cell_type)
-    
+
     def set_wall(self, x, y):
         self._map[x][y].set_cell_type(MapCellType.WALL)
-        
+
     def set_open_space(self, x, y):
         self._map[x][y].set_cell_type(MapCellType.OPEN_SPACE)
-            
+
     def set_customs_area(self, x, y):
         self._map[x][y].set_cell_type(MapCellType.CUSTOMS_AREA)
 
-    def add_secret_door(self, x, y):#, door_cost):
+    def add_secret_door(self, x, y):  # , door_cost):
         cell = self._map[x][y]
         cell.set_cell_type(MapCellType.SECRET_DOOR)
         door_cost = 0
-        cell.set_params((door_cost))
+        cell.set_params(door_cost)
 
     # Add a charging station
     def add_toilet(self, x, y):
         cell = self._map[x][y]
         cell.set_cell_type(MapCellType.TOILET)
         self._toilets.append(cell)
-        
+
     def toilet(self, toilet_num):
         return self._toilets[toilet_num]
-    
+
     def all_toilets(self):
         return self._toilets
 
@@ -141,45 +142,56 @@ class AirportMap(CellGrid):
         cell.set_cell_type(MapCellType.CHARGING_STATION)
         cell.set_params((mean, covariance))
         self._charging_stations.append(cell)
-        
+
     def charging_station(self, station_num):
         return self._charging_stations[station_num]
-    
+
     def all_charging_stations(self):
         return self._charging_stations
-        
+
     # Add a charging station
     def add_rubbish_bin(self, x, y):
         cell = self._map[x][y]
         cell.set_cell_type(MapCellType.RUBBISH_BIN)
-        #cell.set_params((mean, covariance))
+        # cell.set_params((mean, covariance))
         self._rubbish_bins.append(cell)
-        
+
     def rubbish_bin(self, rubbish_bin_num):
         return self._rubbish_bins[rubbish_bin_num]
-    
+
     def all_rubbish_bins(self):
         return self._rubbish_bins
-    
+
     def set_cell_type(self, x, y, cell_type):
         self._map[x][y].set_cell_type(cell_type)
 
     # Q2e:
     # Modify this code to incorporate the cell-type multiplicative penalty
-    
+
     def compute_transition_cost(self, last_coords, current_coords):
-        
         # Compute the basic Euclidean cost
         dX = current_coords[0] - last_coords[0]
         dY = current_coords[1] - last_coords[1]
-        L = math.sqrt(dX * dX + dY * dY)
-            
-        return L
-        
-    def populate_search_grid(self, search_grid):
-        grid = [[SearchGridCell((x, y), self.is_obstructed(x,y)) for y in range(self._height)] \
-                     for x in range(self._width)]
-        
-        search_grid._set_search_grid(grid)
+        Len = math.sqrt(dX * dX + dY * dY)
+        # Extract Cell Type
+        LenWithPenalty = Len
+        x = current_coords[0]
+        y = current_coords[1]
+        cell = self._map[x][y]
+        cellType = cell.cell_type()
+        # Multiply with Penalty Factor based on Cell Type (Moving into a bad area incurs extra cost)
+        if cellType == MapCellType.CUSTOMS_AREA:
+            LenWithPenalty = Len * 100
+        elif cellType == MapCellType.SECRET_DOOR:
+            LenWithPenalty = Len * 5
+        else:
+            LenWithPenalty = Len
+        # print(cell.cell_type())
+        # print(LenWithPenalty)
+        return LenWithPenalty
 
-    
+    def populate_search_grid(self, search_grid):
+        grid = [[SearchGridCell((x, y), self.is_obstructed(x, y)) for y in range(self._height)] \
+                for x in range(self._width)]
+
+        search_grid._set_search_grid(grid)

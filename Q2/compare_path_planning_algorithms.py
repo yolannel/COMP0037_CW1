@@ -17,7 +17,7 @@ if __name__ == '__main__':
     airport_map = full_scenario()
     
     # Create the gym environment
-    airport_environment = AirportBatteryChargingEnvironment(airport_map, PlannerType.BREADTH_FIRST)
+    airport_environment = AirportBatteryChargingEnvironment(airport_map, PlannerType.A_STAR)
     
     # Set the graphics debugging to full
     airport_environment.enable_verbose_graphics(True)
