@@ -15,17 +15,14 @@ from bandits.bandit import BanditEnvironment
 from bandits.random_action_agent import RandomActionAgent
 
 if __name__ == '__main__':
-    # Create bandit
     environment = BanditEnvironment(4)
     
-    # Add some bandits
     environment.set_bandit(0, Bandit(4, 1))    
     environment.set_bandit(1, Bandit(4.1, 1))
     environment.set_bandit(2, Bandit(3.9, 1))
     environment.set_bandit(3, Bandit(4.2, 1))
     
-    agent = RandomActionAgent(environment);
-    #Use run bandit function to simulate
+    agent = RandomActionAgent(environment)
     runs = 4000
     reward_history = np.zeros(runs)
     action_history = np.zeros(runs)
@@ -40,4 +37,8 @@ if __name__ == '__main__':
     plt.ylabel('Mean Charging Rate (Amps)')
     plt.title('Violin Plot of Robot Charging Data')
     plt.grid(True)
+    plt.ion()
+    plt.show()
+    plt.pause(0.001)
+    input()
 # %%

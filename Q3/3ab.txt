@@ -1,0 +1,11 @@
+a. Define what a Finite Markov Decision Process (FMDP) is, and describe its main components. [5 marks]
+
+A Finite Markov Decision Process (FMDP) is a mathematical model used to analyze discrete systems that have uncertainty with finite state and action spaces. It consists of a finite set of states, a finite set of actions, state transition probabilities, a reward function, and a discount factor.
+A state is a member of some finite state space.
+An action is a member of some finite, state-dependent action.
+A state transition probability models uncertainty in the process model (which models possible actions depending on the current state and available action). It is a conditional probability for being in s_{t} given that you started in previous state s_{t-1} and took previous action a_{t-1}. It can be implemented by adding an uncertainty term to a then Noisy Navigation Process Model.
+The reward function computes a real value depending on the state and action from a probability distribution. There is a finite number of rewards which are drawn from the reward space.
+The discount factor scales how much future rewards have on a computed return, which makes reward calculations more or less short-term (or long-term).
+
+b. Consider the case where the robot starts at a known start location and has to reach a known goal location. When the robot reaches the goal, the episode ends. Explain
+how this can be modelled as an FMDP. Your answer should relate the problem to each component of an FMDP you identified in part (a). [15 marks]
