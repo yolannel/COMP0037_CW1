@@ -7,5 +7,7 @@ costs using the path cost stored in the two potential parent cells. The algorith
 path cost and rewrites the cell's parent if necessary. This process is repeated until the algorithm reaches the goal. Using this
 approach Dijkstra's guarantees that the path found between the start and the goal is optimal.
 
-Compared to breadth-first search, Dijkstra visits a similar number of cells but usually has an identical or slightly lower path cost.
+Compared to breadth-first search, Dijkstra visits a similar number of cells (13050 vs 13074) but hsa a slightly lower 
+total path cost (580.47 vs 550.65). This represents a 5% reduction in the path cost for a 0.18% increase in the number
+of visited cells, which shows a slight improvement using Dijkstra when compared to breadth-first search.
 (Total cost calculations to be done)

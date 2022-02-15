@@ -21,7 +21,7 @@ class AStarPlanner(DijkstraPlanner):
         cellCoords = cell.coords()
         goalCoords = self.goal.coords()
         
-        # Estimate Cost to Come
+        # Estimate Cost to Come - Euclidean Heuristic
         dXp = cellCoords[0] - goalCoords[0]
         dYp = cellCoords[1] - goalCoords[1]
         estCost = math.sqrt(dXp * dXp + dYp * dYp)
@@ -29,11 +29,9 @@ class AStarPlanner(DijkstraPlanner):
         if (cell.parent is None):
             cell.path_cost = 0
         else:
-            # Calculate current path cost using parent
+            # Calculate current path cost using parent and penalty
             parentCoords = cell.parent.coords()
-            dXp = cellCoords[0] - parentCoords[0]
-            dYp = cellCoords[1] - parentCoords[1]
-            dp = math.sqrt(dXp * dXp + dYp * dYp)
+            dp = self._environment_map.compute_transition_cost(parentCoords, cellCoords)
             cell.path_cost = cell.parent.path_cost + dp
 
         self.priorityQueue.put((cell.path_cost + estCost, cell))

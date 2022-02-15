@@ -1,0 +1,27 @@
+Comparing the performance of breadth first and depth first search.Breadth first visited a total of 13050 cells and
+had a total path cost of 580.47. Using the same set of points, this was repeated using a depth first alogrithm which
+visited a total of 32296 cells and had a total path cost of 7538.32. Comparing the two results, breadth first 
+performed better in terms of both metrics with a 60% reduction in the number of cells needed to be visited and a
+total path cost reduction of 92%. 
+
+However, it can also be noted that depth first may perform better on individual runs (See depthImg3; breadthImg3)
+in terms of the number of cells visited (1720 for breadth, 282 for depth), the final path cost of such a route tends 
+to still be higher than breadth first (70.4975 for breadth, 132.1127 for depth). Additionally, this tends to be the 
+exception not the rule and for environments where many paths need to be determined, depth first results in 
+significantly poorer results when compared to breadth first.
+
+Observing the cells visited and the paths chosen by each algorithm also reveals some unusual behavior which
+leads to suboptinal results. Firstly, from the figure above (See breadthImg3) long path lengths in breadth first takes alot
+of time exploring leading to a large number of cells visited. This is a result of the first-in-first-out (FIFO) queue
+which prioritises cells nearest to the start point. Additionally (See breadthImg1;breadthImg2), the algoithm tends to 
+not go around corners optimally. This is seen in the two figures where the path overshoots the corner and has in come 
+back around for one case, and in the other case, it overshoots the goal and has to backtrack. This is due to the order 
+the cells are added to the LIFO queue which affects how the path is determined leading to this overshooting behavior.
+
+Depth first also exhibits some unusual behavior with the algorithm often getting stuck in the wrong area and 
+retuning extremely inoptimal paths as the queue operates on a last-in-first-out(LIFO) basis. This results in the algorithm
+exploring one direction until it can no longer explore any further. However, this is done without regard to whether
+the goal is actually present in that area and it is purely luck whether the final goal will be in that direction.
+Thus resulting in either the long winding paths seen in the figure (See depthImg1) or a shorter winding path after
+exploring the whole of the environemnt. (See depthImg2) Also note that in the second figure the algorithm is right
+next to the goal but does not realise until after exploring the whole environment due to the LIFO queue structure.

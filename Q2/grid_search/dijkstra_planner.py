@@ -19,7 +19,6 @@ class DijkstraPlanner(PlannerBase):
         PlannerBase.__init__(self, occupancyGrid)
         self.priorityQueue = PriorityQueue()
 
-    # Simply put on the end of the queue
     def push_cell_onto_queue(self, cell):
         cellCoords = cell.coords()
         # startCoords = self.start.coords()
@@ -33,9 +32,13 @@ class DijkstraPlanner(PlannerBase):
         else:
             # Calculate current path cost using parent
             parentCoords = cell.parent.coords()
-            dXp = cellCoords[0] - parentCoords[0]
-            dYp = cellCoords[1] - parentCoords[1]
-            dp = sqrt(dXp * dXp + dYp * dYp)
+            # # Without pentalty
+            # dXp = cellCoords[0] - parentCoords[0]
+            # dYp = cellCoords[1] - parentCoords[1]
+            # dp = sqrt(dXp * dXp + dYp * dYp)
+            # Evaluate cell type to determin cost multiplier
+            dp = self._environment_map.compute_transition_cost(parentCoords, cellCoords)
+            # print(self._environment_map.compute_transition_cost(parentCoords, cellCoords))
             cell.path_cost = cell.parent.path_cost + dp
 
         # Calculate distance from start for prio. q
