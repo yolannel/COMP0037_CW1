@@ -1,0 +1,18 @@
+To account for traversibility contraints in the environment, the compute_transition_cost function in airport_map was modified. After calculating the 
+Euclidean distance from the parent cell to the new cell, the compute_transition_cost function extracts the cell type of the new cell using the cell_type
+function and checks whether it is part of the customs area or secret door and multiplies the Euclidean distance with the corresponsing penalty. If it is
+neither of these cell types then no penalty is applied and Euclidean distance is used as the transition cost. A slight modification was also made to
+push_cell_onto_queue in dijkstra_planner to use the compute_transition_cost function which is part of airport_map which takes the current coordinate and
+parent coordinate as inputs and accounts for traversibility contrainst while returning the transition cost. This value is then used to calculate the cell
+path cost and the corresponding priority the cell should be assigned.
+
+Both implementations took into account traversibility contrainsts when calculating final path cost. The first implementation did not use traversibility
+constraints and only used path distance for the path cost key in the priority queue whereas the second implementation included traversibility constraints in path distance calculations.
+Comparing the two implementations, for paths that do not cross through the customs area there is no change for the cost and there is a slight reduction in
+the number of cells visited as the algorithm no longer explores the customs area or any area beyond it. For paths that pass through the customs area, the
+number of cells visited are similar (within 5% of each other) but there was an observed average 73% reduction in the path cost for the second implementation
+when compared with the first.
+
+Comparing the second implementation with the original implementation where traversibility contrainsts was not considered for the final path cost, the new algorithm
+visits 7% fewer cells as it is less likely to explore the customs area and has a 20% increase in the total path cost. This is due to the extra distance the robot
+has to travel to avoid the customs area and the penalty associated with traversing the secret door.

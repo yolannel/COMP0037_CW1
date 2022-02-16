@@ -1,0 +1,11 @@
+The A* algorithm is implemented by redefining how new cells are added into the queue. Instead of only using current path cost as
+the key, an additional estimated cost to come component is also added. This is a heuristic that estimates how close or far a cell
+is from the goal and calculates the Euclidean distance between that cell and the goal. The estimated cost to come is then added to
+the path cost to form the final key value, and cells with a smaller value have higher priority.
+
+Assuming that path cost calculations will take into account traversibility contraints.
+Comparing the number of cells visited, A* visits significantly fewer cells with reductions of 60%, 63% and 85% when compared to
+Dijkstra, breadth-first and depth-first. This is mainly due to the greedy search nature of the A* algorithm which allows it to
+prioritise cells closest to the goal.
+Comparing the total path cost, A* performs significantly better than breadth-first and depth-first as both algorithms do not consider
+path cost when exploring and calculating the final path cost. This allows A* to obtain a path cost reduction of 54%(breadth-first) and 97%(depth-first)

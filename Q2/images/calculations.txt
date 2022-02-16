@@ -1,0 +1,16 @@
+Breadth First
+Total Cells Visited: 13050
+Path Cost: 580.4701
+
+Depth First
+Total Cells Visited:
+Path Cost:
+
+Dijkstra
+Total Cells Visited:
+Path Cost:
+Path Cost (Including Cost Function):
+
+A_Star
+Total Cells Visited: 3030
+Path Cost (Including Cost Function):
