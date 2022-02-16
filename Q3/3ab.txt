@@ -7,5 +7,5 @@ A state transition probability models uncertainty in the process model (which mo
 The reward function computes a real value depending on the state and action from a probability distribution. There is a finite number of rewards which are drawn from the reward space.
 The discount factor scales how much future rewards have on a computed return, which makes reward calculations more or less short-term (or long-term).
 
-b. Consider the case where the robot starts at a known start location and has to reach a known goal location. When the robot reaches the goal, the episode ends. Explain
-how this can be modelled as an FMDP. Your answer should relate the problem to each component of an FMDP you identified in part (a). [15 marks]
+b. Consider the case where the robot starts at a known start location and has to reach a known goal location. When the robot reaches the goal, the episode ends. Explain how this can be modelled as an FMDP. Your answer should relate the problem to each component of an FMDP you identified in part (a). [15 marks]
+The states that the robot can have are its location, which is finite across the arrivals area. The actions it can take are the directions it can move in that are not obstructed by any obstacles (e.g. food vendors, baggage reclaim areas, etc). The state transition probability 
