@@ -1,0 +1,10 @@
+If the mean and covariances for the charging stations are unknown the algorithm should initlialise the charging stations with the same mean and variances and update these variables based on information learned when visiting each charging
+station. The algorithm should also have a exploration and exploitation split which would allow it to learn the mean and variance distributions of the charging stations. Exploration would have the robot move to the nearest charging station
+whereas exploitation would also take into account the expected reward from each charging station. The optimal charging station can be calculated using a combination of upper confidence bound action selection and the path cost calculated
+by A*. 
+
+**** NOT SURE IF THE BIT BELOW IS NEEDED ****
+
+However, a limitation of such an approach assumes that the robot moves around the whole environment and the charging stations are spaced apart in a way such that when exploring the chosen charging station is effectively random.
+A possible way of overcoming this is to randomly choose a charging station but this may be inefficient if the robot has to travel long distances to it. Additionally, if the robot only operates in part of the environment, the robot may
+only gather information on the nearby charging stations which might not be the desired behaviour 

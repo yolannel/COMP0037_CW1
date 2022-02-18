@@ -1,0 +1,8 @@
+The inadmissible heuristic picked was the squared Euclidean. A figure of the calculated policy is shown below: (SEE IMAGE)
+
+IMAGE HERE
+
+Comparing the two policies, the inadmissible heuristic made a difference in the center of the map where different policies converged. 
+The optimal policy was incorrectly calculated to be magenta when an admissible heuristic should calculate it to be red or green.
+Additionally, the boundary between the red/green, green/magenta and blue/magenta areas are slightly different when compared to the 
+admissible heuristic.

@@ -1,0 +1,21 @@
+The algorithm implemented traverses across the whole airprot_map and first checks if the robot can travel from the cell by checking whether the cell 
+is an obstruction. If not, the algorithm calculates the action reward using the action function below:
+
+action_reward(current location, action - choose charging/reward location) = mean reward for action - path cost (current location, reward location)
+
+The possible action rewards for each valid cell are calculated and compared with the action for the best reward stored for that cell. 
+This is then repeated for all the valid cells until an optimal policy is calculated.
+
+Using the approach above, the charging policy is calculated and a figure of the resulting policy is shown below:
+
+IMAGE HERE
+N.B for 2j img with charging stations bracket format (station no., mean power, variance)
+
+The results are as expected with a few key points noted below:
+1. Between the green and red region, the charging locations have the same mean and therefore the decision boundary is at the equidistant line between the two charging stations
+2. Between the blue and magenta region, the robot may prioritise the magenta station over the blue station even if the path cost to the blue station is lower.
+   This is due to the higher average power of the magenta station. The decision boundary line has been shifted 5 squares to the left as a result (each unit of power = path cost of 1)
+3. Any robot in the customs area will try to leave the customs area using the most direct route before moving to the nearest charging station, this is due to the high cost of
+   traversing the customs area.
+4. The larger reward at the magenta station means that the robot may prioritise it and travel through the secret door even if the path cost to the green station is lower.
+5. All obstructions are grey as the robot cannot physically be at any of these locations

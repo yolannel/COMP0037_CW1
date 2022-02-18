@@ -21,10 +21,15 @@ class AStarPlanner(DijkstraPlanner):
         cellCoords = cell.coords()
         goalCoords = self.goal.coords()
         
-        # Estimate Cost to Come - Euclidean Heuristic
+        # Estimate Cost to Come
         dXp = cellCoords[0] - goalCoords[0]
         dYp = cellCoords[1] - goalCoords[1]
-        estCost = math.sqrt(dXp * dXp + dYp * dYp)
+
+        # Euclidean Heuristic
+        # estCost = math.sqrt(dXp * dXp + dYp * dYp)
+
+        # Squared Euclidean Heuristic (INADMISSIBLE)
+        estCost = dXp * dXp + dYp * dYp
 
         if (cell.parent is None):
             cell.path_cost = 0

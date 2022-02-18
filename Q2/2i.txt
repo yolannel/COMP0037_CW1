@@ -1,1 +1,8 @@
-We are given the action value function for policy ‘π’ which tells us the expected return we can obtain from a value of an action of a given state following a policy of ‘π’:  q_π (s,a)=μ_a-l(s,s_a ). We also know the mean and covariance of each station. To compute the optimal policy for a given state, we need to check if policy ‘π’ is better than or same as policy ‘π’’ which can be done by calculating and comparing state-value function v(π) where optimal state value function is defined as v_* (s)=max⁡〖v_π (s)〗. Similarly, the optimal action value function is q_* (s,a)=max⁡〖q_π (s,a)〗. Therefore we can see that in order to maximise this value, the difference between the mean and the difference must be as large as possible.
+We are given the action value function for policy ‘π’ which tells us the expected return we can obtain from a value of an action of a given state following a policy of ‘π’: 
+q_π (s,a)=μ_a-l(s,s_a ). We also know the mean and covariance of each station. To compute the optimal policy for a given state, we need to check if policy ‘π’ is better than
+or same as policy ‘π’’ which can be done by calculating and comparing state-value function v(π) where optimal state value function is defined as v_* (s)=max⁡〖v_π (s)〗.
+Similarly, the optimal action value function is q_* (s,a)=max⁡〖q_π (s,a)〗. Therefore we can see that in order to maximise q_π (s,a), 
+the selected action must ensure that the difference between the charging station mean and the path cost to travel to the charging station from s must be maximised.
+
+This determines the optimal reward for a given state in the airport_map, to calculate the optimal policy ‘π_*’, this is process is repeated for the whole state space. When the
+optimal action for any state in the whole state space is known, this is a sufficient condition to determine ‘π_*’
