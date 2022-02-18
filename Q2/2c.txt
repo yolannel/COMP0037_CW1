@@ -1,10 +1,9 @@
 The first change Dijkstra's algorithm implements is the use a priority queue instead of a FIFO queue
 with the key for the queue being the distance from the initial state to the cell. The lower the distance
-from the initial state the higher the priority in the queue. 
-
+from the initial state the higher the priority in the queue. This is because Dijkstra takes into account the cost of each path. Breadth first search, like Dijkstra always returns the shortest amount of edges however considers the vertices to be all equal in weight so the traversed path may not be optimal. On the other hand Dijkstra ensures the path searched up to the current cell is optimal by ensuring the shortest path length is placed at the front of the queue.
 
 The second change is the use of a cost function to calculate optimality. The path between cells can be 
 assigned a cost function which is used to determine the shortest path to a particular cell. Each cell is 
-assigned a path_cost variable which is uesd to store the cost of the most optimal path. Using this 
+assigned a path_cost variable which is used to store the cost of the most optimal path. Using this 
 approach, Dijkstra's is able to find the most optimal path to a specific cell from the initial state 
-while taking into account distance and terrain traversibility through the cost function.
+while taking into account distance and terrain traversability through the cost function.
