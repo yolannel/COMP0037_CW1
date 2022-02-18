@@ -8,4 +8,10 @@ The reward function computes a real value depending on the state and action from
 The discount factor scales how much future rewards have on a computed return, which makes reward calculations more or less short-term (or long-term).
 
 b. Consider the case where the robot starts at a known start location and has to reach a known goal location. When the robot reaches the goal, the episode ends. Explain how this can be modelled as an FMDP. Your answer should relate the problem to each component of an FMDP you identified in part (a). [15 marks]
-The states that the robot can have are its location, which is finite across the arrivals area. The actions it can take are the directions it can move in that are not obstructed by any obstacles (e.g. food vendors, baggage reclaim areas, etc). The state transition probability 
+
+The states that the robot can have are its location, which is finite across the arrivals area. The actions it can take are the directions it can move in that are not obstructed by any obstacles (e.g. food vendors, baggage reclaim areas, etc). The state transition probability of the robot moving from its current grid location to a nominal direction is $p$, and the probability of moving to one of the two adjacent squares on either side is $q = 0.5(1-p)$. The reward function could be laid out as follows, given that the robot does not need to be recharged for the duration of the task:
++1000 for reaching the goal location
+-10 for collisions in luggage reclaim
+-1 for collisions with other objects
+-1 per step due to energy use
+The discount factor in this case would be 1 since the robot's future reward (i.e. reaching the goal) should be weighted heavily.
