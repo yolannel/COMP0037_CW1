@@ -203,14 +203,26 @@ class AirportMap(CellGrid):
     # Modify this code to incorporate the cell-type multiplicative penalty
 
     def compute_transition_cost(self, last_coords, current_coords):
-        
         # Compute the basic Euclidean cost
         dX = current_coords[0] - last_coords[0]
         dY = current_coords[1] - last_coords[1]
-        L = math.sqrt(dX * dX + dY * dY)
-            
-        return L
-        return L
+        Len = math.sqrt(dX * dX + dY * dY)
+        # Extract Cell Type
+        LenWithPenalty = Len
+        x = current_coords[0]
+        y = current_coords[1]
+        cell = self._map[x][y]
+        cellType = cell.cell_type()
+        # Multiply with Penalty Factor based on Cell Type (Moving into a bad area incurs extra cost)
+        if cellType == MapCellType.CUSTOMS_AREA:
+            LenWithPenalty = Len * 100
+        elif cellType == MapCellType.SECRET_DOOR:
+            LenWithPenalty = Len * 5
+        else:
+            LenWithPenalty = Len
+        # print(cell.cell_type())
+        # print(LenWithPenalty)
+        return LenWithPenalty
         
     def populate_search_grid(self, search_grid):
         grid = [[SearchGridCell((x, y), self._map[x][y].is_obstruction()) for y in range(self._height)] \

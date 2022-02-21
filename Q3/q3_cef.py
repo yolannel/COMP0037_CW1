@@ -15,18 +15,21 @@ from airport.driving_policy_drawer import DrivingPolicyDrawer
 if __name__ == '__main__':
     
     # Get the map for the scenario
-    #airport_map, drawer_height = three_row_scenario()
-    airport_map, drawer_height = full_scenario()
-    
+    airport_map, drawer_height = three_row_scenario()
+    #airport_map, drawer_height = full_scenario()
+
     # Set up the environment for the robot driving around
     airport_environment = AirportDrivingEnvironment(airport_map)
     
     # Configure the process model
-    airport_environment.set_nominal_direction_probability(1.0)
-    
+    airport_environment.set_nominal_direction_probability(1)
+    print(airport_environment.action_space)
+
     # Create the policy iterator
     policy_solver = PolicyIterator(airport_environment)
     
+    policy_solver.set_gamma(1)
+
     # Set up initial state
     policy_solver.initialize()
         
@@ -43,5 +46,8 @@ if __name__ == '__main__':
     # Save screen shot; this is in the current directory
     policy_drawer.save_screenshot("policy_iteration_results.jpg")
     
+    print("Press key to continue")
+
     # Wait for a key press
     value_function_drawer.wait_for_key_press()
+

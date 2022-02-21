@@ -6,6 +6,7 @@ Created on 29 Jan 2022
 
 # This class implements the policy iterator algorithm.
 
+from cmath import nan
 from .dynamic_programming_base import DynamicProgrammingBase
 
 class PolicyIterator(DynamicProgrammingBase):
@@ -54,6 +55,8 @@ class PolicyIterator(DynamicProgrammingBase):
                 self._value_drawer.update()
                 
             policy_iteration_step += 1
+
+            print(f'Finished policy iteration {policy_iteration_step}')
 
         # Draw one last time to clear any transients which might
         # draw changes
@@ -120,7 +123,7 @@ class PolicyIterator(DynamicProgrammingBase):
             # Increment the policy evaluation counter        
             iteration += 1
                        
-            print(f'Finished policy evaluation iteration {iteration}')
+            # print(f'Finished policy evaluation iteration {iteration}')
             
             # Terminate the loop if either the change was very small, or we exceeded
             # the maximum number of iterations.
@@ -131,7 +134,58 @@ class PolicyIterator(DynamicProgrammingBase):
 
         # Q3d: Finish implementing policy iteration
 
-        return True
+        # Get environment and map
+        environment = self._environment
+        map = environment.map()
+
+        # Assume policy is stable
+        policy_stable = True
+
+        # For every state go through each cell and choose the neighbouring cell with the highest score
+        for x in range(map.width()):
+            for y in range(map.height()):
+
+                # Skip irrelevant cells
+                if map.cell(x, y).is_obstruction() or map.cell(x, y).is_terminal():
+                        continue
+
+                # Current best action
+                try:
+                    current_a = self._pi.action(x,y)
+                    # print(current_a.value)
+                    # print(environment._driving_deltas[current_a.value])
+                    current_arrow = environment._driving_deltas[current_a.value]
+                    # print(current_arrow)
+                    # Check if pointing at obstruction and stop loopback
+                    if map.cell(x+current_arrow[0], y+current_arrow[1]).is_obstruction() or x+current_arrow[0] < 0 or y+current_arrow[1] < 0:
+                        current_v = -10000000
+                    else:
+                        current_v = self._v.value(x+current_arrow[0], y+current_arrow[1])
+                except IndexError:
+                    current_v = -10000000
+
+                for i, movement in enumerate(environment._driving_deltas):
+                    try:
+                        # Possible v values
+                        if x+movement[0] >= 0 and y+movement[1] >= 0:
+                            possible_v = self._v.value(x+movement[0], y+movement[1])
+                            # print(x,y,current_v,possible_v)
+
+                        # Compare possible v values, write to cell if better
+                        if possible_v > current_v:
+                            # If changes have to be made policy not stable
+                            policy_stable = False
+                            self._pi.set_action(x,y,i)
+                            # print(x,y,current_v,'changed')
+                            current_v = possible_v
+
+                    except IndexError:
+                        # If index error means on boundary, ignore and continue
+                        pass
+
+                # Choose the nearby cell with the highest v
+
+        return True if policy_stable else False
                 
                 
                 
