@@ -22,6 +22,9 @@ class PolicyIterator(DynamicProgrammingBase):
         # The maximum number of times the policy evaluation iteration
         # is carried out.
         self._max_policy_iteration_steps = 1000
+
+        # List storing evaluation iterations before improvement
+        self._evaluation_steps_per_iteration = []
         
 
     def solve_policy(self):
@@ -56,7 +59,7 @@ class PolicyIterator(DynamicProgrammingBase):
                 
             policy_iteration_step += 1
 
-            print(f'Finished policy iteration {policy_iteration_step}')
+            # print(f'Finished policy iteration {policy_iteration_step}')
 
         # Draw one last time to clear any transients which might
         # draw changes
@@ -67,7 +70,7 @@ class PolicyIterator(DynamicProgrammingBase):
             self._value_drawer.update()
 
         # Return the value function and policy of the solution
-        return self._v, self._pi
+        return self._v, self._pi, self._evaluation_steps_per_iteration, policy_iteration_step
 
         
     def _evaluate_policy(self):
@@ -128,7 +131,8 @@ class PolicyIterator(DynamicProgrammingBase):
             # Terminate the loop if either the change was very small, or we exceeded
             # the maximum number of iterations.
             if (delta < self._theta) or (iteration >= self._max_policy_evaluation_steps_per_iteration):
-                    break
+                self._evaluation_steps_per_iteration.append(iteration)
+                break
 
     def _improve_policy(self):
 

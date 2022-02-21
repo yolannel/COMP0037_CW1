@@ -23,7 +23,6 @@ if __name__ == '__main__':
     
     # Configure the process model
     airport_environment.set_nominal_direction_probability(1)
-    print(airport_environment.action_space)
 
     # Create the policy iterator
     policy_solver = PolicyIterator(airport_environment)
@@ -41,8 +40,12 @@ if __name__ == '__main__':
     policy_solver.set_value_function_drawer(value_function_drawer)
         
     # Compute the solution
-    v, pi = policy_solver.solve_policy()
+    v, pi, evals_per_step, steps = policy_solver.solve_policy()
     
+    print("Nominal Direction Probability:",airport_environment.nominal_direction_probability())
+    print("Policy Evaluation Iterations per Improvement Step:",evals_per_step)
+    print("Total Number of Policy Improvement Iterations:",steps)
+
     # Save screen shot; this is in the current directory
     policy_drawer.save_screenshot("policy_iteration_results.jpg")
     
