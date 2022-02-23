@@ -15,7 +15,6 @@ class ValueFunctionDrawer(GridDrawer):
     def __init__(self, value_function, maximum_grid_drawer_window_height_in_pixels, top_left_in_pixels = None):
 
         GridDrawer.__init__(self, value_function, maximum_grid_drawer_window_height_in_pixels, top_left_in_pixels)
-        
         # Not very efficient way to do it!
         self._last_values = {}
         self._value_texts = {}
@@ -28,8 +27,8 @@ class ValueFunctionDrawer(GridDrawer):
        
     def update(self):
         ### Figure out the width and height
-        width = self._grid.width();
-        height = self._grid.height();
+        width = self._grid.width()
+        height = self._grid.height()
 
         for x in range(width):
             for y in range(height):

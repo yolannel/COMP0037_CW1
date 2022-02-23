@@ -1,0 +1,50 @@
+a. Define what a Finite Markov Decision Process (FMDP) is, and describe its main components. [5 marks]
+
+A Finite Markov Decision Process (FMDP) is a mathematical model used to analyze discrete systems that have uncertainty with finite state and action spaces. It consists of a finite set of states, a finite set of actions, state transition probabilities, a reward function, and a discount factor.
+A state is a member of some finite state space.
+An action is a member of some finite, state-dependent action.
+A state transition probability models uncertainty in the process model (which models possible actions depending on the current state and available action). It is a conditional probability for being in s_{t} given that you started in previous state s_{t-1} and took previous action a_{t-1}. It can be implemented by adding an uncertainty term to a then Noisy Navigation Process Model.
+The reward function computes a real value depending on the state and action from a probability distribution. There is a finite number of rewards which are drawn from the reward space.
+The discount factor scales how much future rewards have on a computed return, which makes reward calculations more or less short-term (or long-term).
+
+b. Consider the case where the robot starts at a known start location and has to reach a known goal location. When the robot reaches the goal, the episode ends. Explain how this can be modelled as an FMDP. Your answer should relate the problem to each component of an FMDP you identified in part (a). [15 marks]
+
+The states that the robot can have are its location, which is finite across the arrivals area. The actions it can take are the directions it can move in that are not obstructed by any obstacles (e.g. food vendors, baggage reclaim areas, etc). The state transition probability of the robot moving from its current grid location to a nominal direction is $p$, and the probability of moving to one of the two adjacent squares on either side is $q = 0.5(1-p)$. The reward function could be laid out as follows, given that the robot does not need to be recharged for the duration of the task:
++1000 for reaching the goal location
+-10 for collisions in luggage reclaim
+-1 for collisions with other objects
+-1 per step due to energy use
+The discount factor in this case should be <= 1 since the task is episodic; this is guaranteed to converge as iterations go to infinity, although a more realistic value should be set based on a threshold for delta.
+
+c. The task is episodic which means it should converge as iterations go to infinity, but the threshold value 1e-6 is not met within 100 iterations. If gamma is set to 0.8, the algorithm converges at 63 iterations.
+
+d. 
+
+e.
+Nominal Direction Probability: 1
+Policy Evaluation Iterations per Improvement Step: [100, 100, 2, 2]
+Total Number of Policy Improvement Iterations: 4
+
+Nominal Direction Probability: 0.9
+Policy Evaluation Iterations per Improvement Step: [100, 26, 6, 7]
+Total Number of Policy Improvement Iterations: 4
+
+Nominal Direction Probability: 0.6
+Policy Evaluation Iterations per Improvement Step: [100, 42, 16]
+Total Number of Policy Improvement Iterations: 3
+
+Nominal Direction Probability: 0.3
+Policy Evaluation Iterations per Improvement Step: [100, 84, 50]
+Total Number of Policy Improvement Iterations: 3
+
+Each of the four p values converge to the same policy. However, the value functions for 1 are largest corresponding to no penalty for possibly stepping on an unintended tile. As the probability of stepping on the intended tile decreases to be 0.9, 0.6, and 0.3, there is an increasing chance of taking some arbitrarily long non-optimal path by 'mis-stepping' repeatedly and accruing penalty. This can be seen by the fact that the starting tile's value function for p=0.9 is greater than that of p=0.6, which in turn is greater than that of p=0.3 (where this arbitrarily long chain of missteps is most likely).
+
+f.
+Nominal Direction Probability: 0.8
+Policy Evaluation Iterations per Improvement Step: [100, 31, 10]
+Total Number of Policy Improvement Iterations: 3
+
+Two counters were added, one during the policy evaluation subroutine to count the internal iterations per policy iteration, and another which counts the number of policy iterations. A vector holds the number of evaluation iterations for each imporvement steps.
+
+Each step of the policy improvement algorithm includes policy evaluation, which is in itself also iterative. Each policy evaluation iteration for a policy \pi updates the value function sequence {v_k} using the Bellman equation as an update rule. The first step having 100 evaluation iterations indicates that the value function did not converge to an increment lower than threshold \theta. The next improvement step takes the final value function from the previous step and starts with that to begin evaluation iterations, which may be because the value functions do not change very much between policies. The number of evaluation iterations drastically decreases and converges at 31 iterations. Beginning with this value function for the 3rd and final step again converges more quickly at 10 iterations.
+Only 3 steps are required for the policy to converge. The policy improvement theorem implemented guarantees that each step is better than the previous policy, and there are finite policies for an FMDP; in this case, the optimal policy is reached very quickly (but only improvement is guaranteed from step to step typically).
