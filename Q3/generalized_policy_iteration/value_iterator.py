@@ -107,9 +107,7 @@ class ValueIterator(DynamicProgrammingBase):
                     # Update the maximum deviation
                     delta = max(delta, abs(old_v-new_v))
                     # Sum over the rewards
-                    
-            
- 
+
             # Increment the policy evaluation counter        
             iteration += 1
 
