@@ -165,10 +165,11 @@ class ValueIterator(DynamicProgrammingBase):
                             # print(x,y,current_v,possible_v)
 
                         # Compare possible v values, write to cell if better
-                            if possible_v > current_v:
-                                # If changes have to be made policy not stable
-                                print("cell",x,y,"target", x+movement[0], y+movement[1])
-                                self._pi.set_action(x,y,i)
+                        if possible_v > current_v:
+                            # If changes have to be made policy not stable
+                            # print("cell",x,y,"target", x+movement[0], y+movement[1])
+                            self._pi.set_action(x,y,i)
+                            current_v = possible_v
                     except IndexError:
                         # If index error means on boundary, ignore and continue
                         pass
