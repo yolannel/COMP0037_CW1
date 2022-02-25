@@ -77,23 +77,26 @@ class ValueIterator(DynamicProgrammingBase):
                     cell = (x, y)
                     
                     # Set up a max holder
-                    max_v = 0
+                    max_v = -10000000
 
                     # Get the previous value function
                     old_v = self._v.value(x, y)
 
-                    for i, movement in enumerate(environment._driving_deltas):
+                    for i in range(0,len(environment._driving_deltas)):
                         try:
+                            #SKIP -1 ACTIONS ON EDGE
+
                             # Compute p(s',r|s,a)
-                            s_prime, r, p = environment.next_state_and_reward_distribution(cell, \
-                                                                            i, True)
+                            s_prime, r, p = environment.next_state_and_reward_distribution(cell, i)
                             new_v = 0
                             for t in range(len(p)):
                                 sc = s_prime[t].coords()
                                 new_v = new_v + p[t] * (r[t] + self._gamma * self._v.value(sc[0], sc[1])) 
-                            
+                            # print("Cell",x,y,new_v)
                             # print("old: " + str(old_v) + " new: " + str(new_v))
+                            # print("max",max_v,"new",new_v)
                             max_v = max(max_v,new_v)
+
 
                         except IndexError:
                             # If index error means on boundary, ignore and continue
@@ -106,13 +109,18 @@ class ValueIterator(DynamicProgrammingBase):
                     
                     # Update the maximum deviation
                     delta = max(delta, abs(old_v-new_v))
+                    # print("delta",delta)
+                    # print("theta",self._theta)
                     # Sum over the rewards
+                
 
             # Increment the policy evaluation counter        
             iteration += 1
 
             # Terminate the loop if either the change was very small, or we exceeded
             # the maximum number of iterations.
+            print("INTERATION:",iteration)
+            print("delta", delta)
             if (delta < self._theta) or (iteration >= self._max_optimal_value_function_iterations):
                 # self._steps_per_iteration.append(iteration)
                 print("iterations: " + str(iteration))
@@ -157,10 +165,10 @@ class ValueIterator(DynamicProgrammingBase):
                             # print(x,y,current_v,possible_v)
 
                         # Compare possible v values, write to cell if better
-                        if possible_v > current_v:
-                            # If changes have to be made policy not stable
-                            policy_stable = False
-                            self._pi.set_action(x,y,i)
+                            if possible_v > current_v:
+                                # If changes have to be made policy not stable
+                                print("cell",x,y,"target", x+movement[0], y+movement[1])
+                                self._pi.set_action(x,y,i)
                     except IndexError:
                         # If index error means on boundary, ignore and continue
                         pass

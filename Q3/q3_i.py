@@ -23,7 +23,7 @@ if __name__ == '__main__':
     airport_environment = AirportDrivingEnvironment(airport_map)
     
     # Configure the process model
-    airport_environment.set_nominal_direction_probability(0.8)
+    airport_environment.set_nominal_direction_probability(1)
     
     
     # Create the policy iterator
