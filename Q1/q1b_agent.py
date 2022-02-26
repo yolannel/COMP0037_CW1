@@ -16,13 +16,11 @@ from bandits.random_action_agent import RandomActionAgent
 
 def run_bandits(environment, number_of_steps):
     
-    action_and_reward = np.zeros([environment.number_of_bandits(),number_of_steps])
+    action_and_reward = np.zeros([number_of_steps,environment.number_of_bandits()])
     for b in range(0, environment.number_of_bandits()):
-        rewards = np.zeros(number_of_steps)
         for s in range(0, number_of_steps):
             obs, reward, done, info = environment.step(b)
-            rewards[s] = reward
-        action_and_reward[b] = rewards
+            action_and_reward[s][b] = reward
     return action_and_reward
     
 if __name__ == '__main__':
@@ -36,9 +34,8 @@ if __name__ == '__main__':
     environment.set_bandit(3, Bandit(4.2, 1))
     
     #Use run bandit function to simulate
-    runs = 4000
+    runs = 10000
     results = run_bandits(environment, runs)
-    results = results.reshape(runs, 4)
     
     #Create violin plot figure, axes and labels
     agent_plt, ax = plt.subplots()
