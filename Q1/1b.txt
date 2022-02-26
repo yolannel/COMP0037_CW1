@@ -1,0 +1,2 @@
+The code creates a bandit environment with four bandits and sets each bandit with the means and variance specified specified in table 1.
+Then the bandits are run the specified number of times in run_bandits and the results are plotted onto a violin plot and saved the jpg shown below.
