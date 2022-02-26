@@ -41,11 +41,18 @@ if __name__ == '__main__':
     results = results.reshape(runs, 4)
     
     #Create violin plot figure, axes and labels
-    agent_plt = plt.figure()
-    ax = agent_plt.add_axes([0,0,1,1])
-    ax.violinplot(results)
-    plt.xlabel('Charging Location')
-    plt.ylabel('Mean Charging Rate (Amps)')
-    plt.title('Violin Plot of Robot Charging Data')
+    agent_plt, ax = plt.subplots()
+    # ax = agent_plt.add_axes([0,0,1,1])
+    ax.violinplot(results,showmeans=True)
+    ax.set_xlabel('Charging Location')
+    ax.set_ylabel('Mean Charging Rate (Amps)')
+    ax.set_title('Violin Plot of Robot Charging Data')
+    labels = ['1', '2', '3', '4']
+    ax.xaxis.set_tick_params(direction='out')
+    ax.xaxis.set_ticks_position('bottom')
+    ax.set_xticks(np.arange(1, len(labels) + 1), labels=labels)
+    ax.set_xlim(0.25, len(labels) + 0.75)
     plt.grid(True)
+    agent_plt.savefig('violin.jpg')
+    # plt.show()
 # %%
