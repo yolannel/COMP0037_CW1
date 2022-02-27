@@ -26,10 +26,10 @@ class AStarPlanner(DijkstraPlanner):
         dYp = cellCoords[1] - goalCoords[1]
 
         # Euclidean Heuristic
-        # estCost = math.sqrt(dXp * dXp + dYp * dYp)
+        estCost = math.sqrt(dXp * dXp + dYp * dYp)
 
         # Squared Euclidean Heuristic (INADMISSIBLE)
-        estCost = dXp * dXp + dYp * dYp
+        # estCost = dXp * dXp + dYp * dYp
 
         if (cell.parent is None):
             cell.path_cost = 0

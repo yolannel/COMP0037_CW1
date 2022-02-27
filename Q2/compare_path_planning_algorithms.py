@@ -17,10 +17,10 @@ if __name__ == '__main__':
     airport_map = full_scenario()
     
     # Create the gym environment
-    airport_environment = AirportBatteryChargingEnvironment(airport_map, PlannerType.DIJKSTRA)
+    airport_environment = AirportBatteryChargingEnvironment(airport_map, PlannerType.BREADTH_FIRST)
     
     # Set the graphics debugging to full
-    airport_environment.enable_verbose_graphics(True)
+    # airport_environment.enable_verbose_graphics(True)
     
     # First specify the start location of the robot
     action = (ActionType.TELEPORT_ROBOT_TO_NEW_POSITION, (0, 0))
@@ -31,15 +31,18 @@ if __name__ == '__main__':
         
     # Get all the rubbish bins and toilets; these are places which need cleaning
     all_rubbish_bins = airport_map.all_rubbish_bins()
-        
-    # Q2b
-    # Modify this code to collect the data needed to assess the different algorithms
+    total_reward = 0
+    total_path_cost = 0
     
     # Now go through them and plan a path sequentially
     for rubbish_bin in all_rubbish_bins:
             action = (ActionType.DRIVE_ROBOT_TO_NEW_POSITION, rubbish_bin.coords())
             observation, reward, done, info = airport_environment.step(action)
-    
+            total_reward += reward
+            total_path_cost += info.number_of_cells_visited
+    print("Total Cells Visited",total_path_cost)
+    print("Total Path Cost",total_reward)
+
     try:
         input("Press enter in the command window to continue.....")
     except SyntaxError:

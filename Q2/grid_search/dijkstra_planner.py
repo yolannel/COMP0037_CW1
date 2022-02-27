@@ -38,13 +38,7 @@ class DijkstraPlanner(PlannerBase):
             # dp = sqrt(dXp * dXp + dYp * dYp)
             # Evaluate cell type to determin cost multiplier
             dp = self._environment_map.compute_transition_cost(parentCoords, cellCoords)
-            # print(self._environment_map.compute_transition_cost(parentCoords, cellCoords))
             cell.path_cost = cell.parent.path_cost + dp
-
-        # Calculate distance from start for prio. q
-        # dX = cellCoords[0] - startCoords[0]
-        # dY = cellCoords[1] - startCoords[1]
-        # d = sqrt(dX * dX + dY * dY)
         self.priorityQueue.put((cell.path_cost, cell))
 
     # Check the queue size is zero
@@ -66,9 +60,7 @@ class DijkstraPlanner(PlannerBase):
         cellPathCost = cell.path_cost
         # Compare path cost of moving from parent to cell
             # NewCost: Parent Cost + Euclid. Dist
-        dXnc = cellCoords[0] - parentCoords[0]
-        dYnc = cellCoords[1] - parentCoords[1]
-        dnc = sqrt(dXnc * dXnc + dYnc * dYnc)
+        dnc = self._environment_map.compute_transition_cost(parentCoords, cellCoords)
         newCost = parentPathCost + dnc
         # If NewCost < CurrentCost
             # Set parent_cell as new parent for cell
